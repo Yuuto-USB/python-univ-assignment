@@ -133,11 +133,11 @@ def quiz_word_win():
     entryAnswer = Entry(quiz_win)
     entryAnswer.pack()
 
-    checkBtn = Button(quiz_win, text="확인", command=lambda: quiz_word(entryAnswer, answer, question, count))
+    checkBtn = Button(quiz_win, text="확인", command=lambda: quiz_word(entryAnswer, answer, question, count, quiz_win))
     checkBtn.pack()
 
 # 입력한 답과 정답이 일치하는지 확인하는 함수
-def quiz_word(entryAnswer, answer, question, count):
+def quiz_word(entryAnswer, answer, question, count, quiz_win):
     global wordDict
     global corSet
     global incorSet
@@ -151,6 +151,7 @@ def quiz_word(entryAnswer, answer, question, count):
         corSet.add(question)
         if question in incorSet:
             incorSet.remove(question)
+        return quiz_win.destroy()
     else:
         messagebox.showinfo("오답", "틀렸습니다. 정답은 %s" %(answer))
         listbox.delete(count)
@@ -158,6 +159,7 @@ def quiz_word(entryAnswer, answer, question, count):
         incorSet.add(question)
         if question in corSet:
             corSet.remove(question)
+        return quiz_win.destroy()
 
 # 맞춘 정답 단어 집합을 리스트박스에 표시하는 함수
 def show_correct():
@@ -238,7 +240,7 @@ title_label.grid(row=0, column=0, columnspan=3, pady=(30, 10))
 
 
 # 중앙 이미지 레이블
-img = PhotoImage(file="./학기말과제/image_file.png")
+img = PhotoImage(file="../학기말과제/image_file.png")
 image_label = Label(root, image=img, bg="#F0F0F0")
 image_label.grid(row=1, column=0, columnspan=3, pady=(0, 20))
 

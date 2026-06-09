@@ -164,18 +164,21 @@ def quiz_word(entryAnswer, answer, question, count, quiz_win):
 
 # 맞춘 정답 단어 집합을 리스트박스에 표시하는 함수
 def show_correct():
-    global corSet
+    global allSet
+    global incorSet
+
 
     listbox.delete(0, END)
-    for word in corSet:
+    for word in allSet.difference(incorSet):
         listbox.insert(END, f"{word} (V)")
 
 # 틀린 오답 단어 집합을 리스트박스에 표시하는 함수
 def show_wrong():
     global incorSet
-
+    global incorSet
+    
     listbox.delete(0, END)
-    for word in incorSet:
+    for word in allSet.intersection(incorSet):
         listbox.insert(END, f"{word} (X)")
 
 # 전체 단어와 정오답 상태를 리스트박스에 표시하는 함수

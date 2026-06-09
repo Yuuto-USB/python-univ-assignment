@@ -33,7 +33,10 @@ def add_word(inputWord, inputMean):
     if word in shared.wordDict:
         messagebox.showinfo("오류", "이미 존재하는 단어입니다.")
         return 0
-        
+    if word == "":
+        messagebox.showinfo("오류", "단어를 입력해주세요.")
+        return 0
+            
     shared.listbox.insert(END, word)
     shared.wordDict[word] = mean
     shared.reWordDict[mean] = word

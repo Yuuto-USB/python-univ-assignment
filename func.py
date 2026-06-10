@@ -8,27 +8,31 @@ def add_word_win():
     add_win = Toplevel(shared.root)
     add_win.title("단어 입력")
     add_win.resizable(False, False)
-    add_win.geometry("200x150")
+    add_win.geometry("300x150")
     
-    wordText = Label(add_win, text="단어 입력")
-    wordText.pack()
-
-    inputWord = Entry(add_win)
-    inputWord.pack()
-
-    meanText = Label(add_win, text="뜻 입력")
-    meanText.pack()
+    # 중앙 정렬을 위한 그리드 설정
+    add_win.grid_columnconfigure(0, weight=1)
+    add_win.grid_columnconfigure(1, weight=1)
     
-    inputMean = Entry(add_win)
-    inputMean.pack()
+    wordText = Label(add_win, text="단어 입력:", font=("맑은 고딕", 11))
+    wordText.grid(row=0, column=0, sticky="e", padx=10, pady=(20, 10))
 
-    checkBtn = Button(add_win, text="확인", command=lambda: add_word(inputWord, inputMean))
-    checkBtn.pack()
+    inputWord = Entry(add_win, font=("맑은 고딕", 11), width=15)
+    inputWord.grid(row=0, column=1, sticky="w", padx=10, pady=(20, 10))
+
+    meanText = Label(add_win, text="뜻 입력:", font=("맑은 고딕", 11))
+    meanText.grid(row=1, column=0, sticky="e", padx=10, pady=10)
+    
+    inputMean = Entry(add_win, font=("맑은 고딕", 11), width=15)
+    inputMean.grid(row=1, column=1, sticky="w", padx=10, pady=10)
+
+    checkBtn = Button(add_win, text="확인", font=("맑은 고딕", 10), width=8, command=lambda: add_word(inputWord, inputMean))
+    checkBtn.grid(row=2, column=0, columnspan=2, pady=15)
 
 # 입력한 단어를 자료형과 리스트박스에 추가하는 함수
 def add_word(inputWord, inputMean):
-    word = inputWord.get()
-    mean = inputMean.get()
+    word = inputWord.get().strip()
+    mean = inputMean.get().strip()
     
     if word in shared.wordDict:
         messagebox.showinfo("오류", "이미 존재하는 단어입니다.")
@@ -69,31 +73,34 @@ def delete_word():
 # 단어 검색 창을 띄우는 함수
 def search_word_win():
     search_win = Toplevel(shared.root)
-    search_win.title("단어 입력")
+    search_win.title("단어 검색")
     search_win.resizable(False, False)
-    search_win.geometry("200x100")
+    search_win.geometry("320x150")
 
-    wordText = Label(search_win, text="단어나 뜻 입력")
-    wordText.pack()
+    search_win.grid_columnconfigure(0, weight=1)
+    search_win.grid_columnconfigure(1, weight=1)
 
-    inputWord = Entry(search_win)
-    inputWord.pack()
+    wordText = Label(search_win, text="단어나 뜻 입력:", font=("맑은 고딕", 11))
+    wordText.grid(row=0, column=0, sticky="e", padx=10, pady=(20, 5))
 
-    wordResult = Label(search_win, text="이곳에 검색 결과가 표시됩니다.")
-    wordResult.pack()
+    inputWord = Entry(search_win, font=("맑은 고딕", 11), width=15)
+    inputWord.grid(row=0, column=1, sticky="w", padx=10, pady=(20, 5))
 
-    checkBtn = Button(search_win, text="확인", command=lambda: search_word(inputWord, wordResult))
-    checkBtn.pack()
+    wordResult = Label(search_win, text="이곳에 검색 결과가 표시됩니다.", font=("맑은 고딕", 10), fg="blue")
+    wordResult.grid(row=1, column=0, columnspan=2, pady=5)
+
+    checkBtn = Button(search_win, text="확인", font=("맑은 고딕", 10), width=8, command=lambda: search_word(inputWord, wordResult))
+    checkBtn.grid(row=2, column=0, columnspan=2, pady=10)
 
 # 단어장 안에서 단어나 뜻을 검색하는 함수
 def search_word(inputWord, wordResult):
-    word = inputWord.get()
+    word = inputWord.get().strip()
     if word in shared.wordDict:
-        return wordResult.configure(text=f"{word} : {shared.wordDict[word]}")
+        return wordResult.configure(text=f"{word} : {shared.wordDict[word]}", fg="black")
     elif word in shared.reWordDict:
-        return wordResult.configure(text=f"{word} : {shared.reWordDict[word]}")
+        return wordResult.configure(text=f"{word} : {shared.reWordDict[word]}", fg="black")
     else:
-        return wordResult.configure(text="해당 단어가 존재하지 않습니다.")
+        return wordResult.configure(text="해당 단어가 존재하지 않습니다.", fg="red")
 
 # 단어 맞히기 퀴즈 창을 띄우는 함수
 def quiz_word_win():
@@ -109,20 +116,23 @@ def quiz_word_win():
     quiz_win = Toplevel(shared.root)
     quiz_win.title("단어 맞히기")
     quiz_win.resizable(False, False)
-    quiz_win.geometry("200x150")
+    quiz_win.geometry("300x140")
 
-    questionLabel = Label(quiz_win, text=f"문제 : {question}")
-    questionLabel.pack()
+    quiz_win.grid_columnconfigure(0, weight=1)
+    quiz_win.grid_columnconfigure(1, weight=1)
 
-    entryAnswer = Entry(quiz_win)
-    entryAnswer.pack()
+    questionLabel = Label(quiz_win, text=f"{question} 뜻은?", font=("맑은 고딕", 11))
+    questionLabel.grid(row=0, column=0, sticky="e", padx=10, pady=(25, 15))
 
-    checkBtn = Button(quiz_win, text="확인", command=lambda: quiz_word(entryAnswer, answer, question, count, quiz_win))
-    checkBtn.pack()
+    entryAnswer = Entry(quiz_win, font=("맑은 고딕", 11), width=15)
+    entryAnswer.grid(row=0, column=1, sticky="w", padx=10, pady=(25, 15))
+
+    checkBtn = Button(quiz_win, text="확인", font=("맑은 고딕", 10), width=8, command=lambda: quiz_word(entryAnswer, answer, question, count, quiz_win))
+    checkBtn.grid(row=1, column=0, columnspan=2, pady=10)
 
 # 입력한 답과 정답이 일치하는지 확인하는 함수
 def quiz_word(entryAnswer, answer, question, count, quiz_win):
-    word = entryAnswer.get()
+    word = entryAnswer.get().strip()
 
     if word == answer:
         messagebox.showinfo("정답", "정답입니다.")
@@ -132,7 +142,7 @@ def quiz_word(entryAnswer, answer, question, count, quiz_win):
         if question in shared.incorSet:
             shared.incorSet.remove(question)
     else:
-        messagebox.showinfo("오답", "틀렸습니다. 정답은 %s" %(answer))
+        messagebox.showinfo("오답", f"틀렸습니다. 정답은 {answer}")
         shared.listbox.delete(count)
         shared.listbox.insert(count, f"{question} (X)")
         shared.incorSet.add(question)

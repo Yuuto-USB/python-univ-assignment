@@ -1,7 +1,7 @@
 from tkinter import *
 from tkinter import messagebox
 from random import *
-import shared  # shared.py 모듈 임포트
+import shared
 
 # 단어 입력 창을 띄우는 함수
 def add_word_win():
@@ -25,7 +25,7 @@ def add_word_win():
     checkBtn = Button(add_win, text="확인", command=lambda: add_word(inputWord, inputMean))
     checkBtn.pack()
 
-# 입력한 단어를 자료형과 리스트박스에 추가하는 함수 edward 엌ㅋㅋㅋㅋㅋㅋㅋㅋㅋ
+# 입력한 단어를 자료형과 리스트박스에 추가하는 함수
 def add_word(inputWord, inputMean):
     word = inputWord.get()
     mean = inputMean.get()
@@ -140,13 +140,13 @@ def quiz_word(entryAnswer, answer, question, count, quiz_win):
             shared.corSet.remove(question)
     return quiz_win.destroy()
 
-# 맞춘 정답 단어 집합을 리스트박스에 표시하는 함수 (차집합 활용)
+# 맞춘 정답 단어 집합을 리스트박스에 표시하는 함수
 def show_correct():
     shared.listbox.delete(0, END)
     for word in shared.allSet.intersection(shared.corSet):
         shared.listbox.insert(END, f"{word} (V)")
 
-# 틀린 오답 단어 집합을 리스트박스에 표시하는 함수 (교집합 활용)
+# 틀린 오답 단어 집합을 리스트박스에 표시하는 함수
 def show_wrong():
     shared.listbox.delete(0, END)
     for word in shared.allSet.intersection(shared.incorSet):

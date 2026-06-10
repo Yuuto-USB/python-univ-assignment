@@ -28,7 +28,7 @@ title_label = Label(
 title_label.grid(row=0, column=0, columnspan=3, pady=(30, 10))
 
 # 중앙 이미지 레이블
-img = PhotoImage(file="../학기말과제/image_file.png")
+img = PhotoImage(file="image_file.png")
 image_label = Label(root, image=img, bg="#F0F0F0")
 image_label.grid(row=1, column=0, columnspan=3, pady=(0, 20))
 
